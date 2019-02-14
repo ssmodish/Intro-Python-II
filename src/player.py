@@ -10,7 +10,7 @@ class Player:
         self.inventory.append(Item)
 
     def xfer_item(self, Item):
-        if Item in self.items:
+        if Item in self.inventory:
             self.inventory.remove(Item)
             return Item
         else:

@@ -11,6 +11,7 @@ class Room:
         return f"{Item.name} - {Item.description}"
 
     def __str__(self):
+        item_list_string = ""
         if len(self.items) > 0:
             item_list_string = "You see:\n"
             for item in self.items:

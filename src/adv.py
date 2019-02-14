@@ -83,9 +83,23 @@ action_sequence = []
 
 def inputAction():
     action_sequence = input("What are you going to do?\n").lower().split()
-    return action_sequence
+    if len(action_sequence) > 1:
+        # two word command
+        active_item_name = action_sequence[1]
+        action_name = action_sequence[0]
 
-action = inputAction()[0]
+        # get or drop?
+        if action_name == 'get':
+            player.add_item(player.location.xfer_item(item[active_item_name]))
+        elif action_name == 'drop':
+            player.location.add_item(player.xfer_item((item[active_item_name])))
+
+    return action_sequence[0]
+
+action = inputAction()
+
+
+
 print(action)
 
 # *** MAIN GAME LOOP ***
@@ -118,4 +132,4 @@ while action != 'q':
 
     print(player.location)
     print(directions)
-    action = inputAction()[0]
+    action = inputAction()
