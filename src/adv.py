@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -33,11 +34,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+
+
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player('outside')
 
 # Write a loop that:
 #
@@ -49,3 +53,44 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+directional_error_message = 'You can not walk through walls!'
+directions = 'Choose n, s, e, or w'
+
+print(room[player.location])
+# player.location = room[player.location].n_to.location.lower()
+#
+# print(room[player.location])
+
+action = input()
+
+
+while action != 'q':
+    if action == 'n':
+        if hasattr(room[player.location], 'n_to'):
+            player.location = room[player.location].n_to.location.lower().split()[0]
+        else:
+            print(directional_error_message);
+
+    elif action == 's':
+        if hasattr(room[player.location], 's_to'):
+            player.location = room[player.location].s_to.location.lower().split()[0]
+        else:
+            print(directional_error_message);
+
+    elif action == 'e':
+        if hasattr(room[player.location], 'e_to'):
+            player.location = room[player.location].e_to.location.lower().split()[0]
+        else:
+            print(directional_error_message);
+
+    elif action == 'w':
+        if hasattr(room[player.location], 'w_to'):
+            player.location = room[player.location].w_to.location.lower().split()[0]
+        else:
+            print(directional_error_message);
+
+    print(room[player.location])
+    print(directions)
+    action = input()
