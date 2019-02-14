@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,7 +35,20 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+item = {
+    'excalibur': Item("Excalibur",
+                      "A really nice sword"),
 
+    'rusty': Item("A rusty fork",
+                  "You might be able to shine it up"),
+
+    'old_clothes': Item("Some old clothes",
+                        "You had no idea what you were doing today, did you?")
+}
+
+
+room['overlook'].add_item(item['excalibur'])
+room['overlook'].add_item(item['rusty'])
 
 #
 # Main
@@ -42,6 +56,8 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player(room['outside'])
+player.add_item(item['old_clothes'])
+
 
 # Write a loop that:
 #
@@ -62,9 +78,17 @@ directions = 'Choose n, s, e, or w'
 #
 print(player.location)
 
-action = input()
+action_sequence = []
 
 
+def inputAction():
+    action_sequence = input("What are you going to do?\n").lower().split()
+    return action_sequence
+
+action = inputAction()[0]
+print(action)
+
+# *** MAIN GAME LOOP ***
 while action != 'q':
     if action == 'n':
         if hasattr(player.location, 'n_to'):
@@ -89,7 +113,9 @@ while action != 'q':
             player.location = player.location.w_to
         else:
             print(directional_error_message)
+    elif action == 'i':
+        player.print_inventory()
 
     print(player.location)
     print(directions)
-    action = input()
+    action = inputAction()[0]
